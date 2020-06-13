@@ -26,25 +26,27 @@
                     
                     $chart = $_GET['chart'];
                     if($chart=='timeseries') {
-                        $b = 'active'; $a = '';
+                        $b = 'active'; $a = ''; $c = '';
                     } else {
                         $a = 'active';
                         $b = '';
+                        $c = '';
                     }
                 
                 } else{
-                    $chart = 'kmeans';
-                    $a = 'active'; $b = '';
+                    $chart = 'rawData';
+                    $c = 'active'; $b = ''; $a='';
                 }
             ?>
             <div class="col-md-2">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Choose Chart
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="?chart=kmeans">K-Means</a>
-                        <a class="dropdown-item" href="?chart=timeseries">Time Series</a>
+                        <a class="dropdown-item <?php echo $c ?>" href="execPython.php">Raw Data</a>
+                        <a class="dropdown-item <?php echo $a ?>" href="?chart=kmeans">K-Means</a>
+                        <a class="dropdown-item <?php echo $b ?>" href="?chart=timeseries">Time Series</a>
                     </div>
                 </div>
             </div>
