@@ -2,19 +2,31 @@
     <head>
         <title>Execute Python With PHP</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+        <style>
+            .sidebar{
+                min-height: 668px; 
+                background-image: linear-gradient(to bottom right, #10ac84, #0a3d62);
+            }
+
+            .iframe-wrapper{
+                border: 1px solid grey; 
+                border-radius: 5px;
+            }
+
+            iframe{
+                border:none;
+            }
+        </style>
     </head>
     <body>
         <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2 bg-dark text-white" style="min-height: 668px">
+            <div class="col-md-2 text-white pt-4 sidebar mr-0">
                 <center>
-                    <svg class="bi bi-person-circle mt-4 mb-2" width="80" height="80" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z"/>
-                        <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                        <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8z"/>
-                    </svg>
-                    <br>
-                    <p>Administrator</p>
+                    <i class="fa fa-user-circle fa-5x"></i>
+                    <br><p>Administrator</p>
                 </center>
             </div>
             <div class="col-md-10 pt-2">
@@ -22,28 +34,23 @@
             <div class="col-md-12 row">
             
             <?php
+                $a = ''; $b = ''; $c = '';
                 if(isset($_GET['chart'])){
-                    
                     $chart = $_GET['chart'];
-                    if($chart=='timeseries') {
-                        $b = 'active'; $a = ''; $c = '';
-                    } else {
-                        $a = 'active';
-                        $b = '';
-                        $c = '';
-                    }
-                
+                    if($chart=='timeseries') $b = 'active'; 
+                    else $a = 'active';                 
                 } else{
                     $chart = 'rawData';
-                    $c = 'active'; $b = ''; $a='';
+                    $c = 'active'; 
                 }
             ?>
+
             <div class="col-md-2">
                 <div class="dropdown">
-                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Choose Chart
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
                         <a class="dropdown-item <?php echo $c ?>" href="execPython.php">Raw Data</a>
                         <a class="dropdown-item <?php echo $a ?>" href="?chart=kmeans">K-Means</a>
                         <a class="dropdown-item <?php echo $b ?>" href="?chart=timeseries">Time Series</a>
@@ -54,29 +61,42 @@
     <?php
         $file = 'D:/xampp/htdocs/PythonPHP/'.$chart.'.py';
         if(file_exists($file)) {
-            echo '<div class="alert alert-info col-md-10" role="alert">File is exist, and placed in '.$file.'</div></div>';
+            echo '<div class="alert alert-info col-md-10" role="alert">
+                    File is exist, and placed in '.$file.'
+                    </div>
+                </div>';
             $command = escapeshellcmd($file);
             $output = shell_exec($command);
 
             if($output) {
                 echo '
-                <div class="embed-responsive embed-responsive-16by9" style="border: 1px solid grey; border-radius: 5px;">
-                    <iframe id="igraph" class="embed-responsive-item" style="border:none;" scrolling="no" seamless="seamless" 
+                
+                <div class="embed-responsive embed-responsive-16by9 shadow iframe-wrapper">
+                    <iframe id="igraph" class="embed-responsive-item" scrolling="no" seamless="seamless" 
                 src="'.$chart.'.html" height="525" width="100%">
                     </iframe>
                 </div>';
-            }
-
-            else echo '<div class="alert alert-warning" role="alert">
+            
+            } else echo '<div class="alert alert-warning" role="alert">
                         Failed: Unable to generate report :(
                         </div>';
-        }
-
-        else echo '<div class="alert alert-warning" role="alert">
-                        Warning: The path is incorrect or file is not exist!
+        
+        } else echo '<div class="alert alert-warning" role="alert">
+                    Warning: The path is incorrect or file is not exist!
                     </div>';
     ?>
+
+                <div class="col-md-12 p-1 mt-5">
+                    <center>
+                        <p class="text-muted">Alpha Version</p>
+                    </center>    
+                </div>
+ 
             </div>
+            <!-- End of Content Section -->
+
+            
+
         </div>
         </div>
 
