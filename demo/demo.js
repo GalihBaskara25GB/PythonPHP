@@ -4,20 +4,20 @@ $(document).ready(function () {
         $('#content').toggleClass('active');
         $(this).toggleClass('active');
     });
-    $('#raw-data').on('click', function () {
+    $('#unclustered').on('click', function () {
         $(this).toggleClass('active');
-        deactivateElement(['#kmeans','#timeseries']);
-        $('#igraph').attr('src','../rawData.html');
+        deactivateElement(['#clustered','#timeseries']);
+        $('#igraph').attr('src','../unclustered-plot.html');
     });
-    $('#kmeans').on('click', function () {
+    $('#clustered').on('click', function () {
         $(this).toggleClass('active');
-        deactivateElement(['#raw-data','#timeseries']);
-        $('#igraph').attr('src','../kmeans.html');
+        deactivateElement(['#unclustered','#timeseries']);
+        $('#igraph').attr('src','../clustered-plot.html');
     });
     $('#timeseries').on('click', function () {
         $(this).toggleClass('active');       
-        deactivateElement(['#raw-data','#kmeans']);
-        $('#igraph').attr('src','../timeseries.html');
+        deactivateElement(['#unclustered','#clustered']);
+        $('#igraph').attr('src','../timeseries-plot.html');
     });
 });
 

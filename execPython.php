@@ -40,7 +40,7 @@
                     if($chart=='timeseries') $b = 'active'; 
                     else $a = 'active';                 
                 } else{
-                    $chart = 'rawData';
+                    $chart = 'unclustered';
                     $c = 'active'; 
                 }
             ?>
@@ -51,8 +51,8 @@
                         Choose Chart
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
-                        <a class="dropdown-item <?php echo $c ?>" href="execPython.php">Raw Data</a>
-                        <a class="dropdown-item <?php echo $a ?>" href="?chart=kmeans">K-Means</a>
+                        <a class="dropdown-item <?php echo $c ?>" href="execPython.php">Unclustered Data</a>
+                        <a class="dropdown-item <?php echo $a ?>" href="?chart=clustered">Clustered Data</a>
                         <a class="dropdown-item <?php echo $b ?>" href="?chart=timeseries">Time Series</a>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                 
                 <div class="embed-responsive embed-responsive-16by9 shadow iframe-wrapper">
                     <iframe id="igraph" class="embed-responsive-item" scrolling="no" seamless="seamless" 
-                src="'.$chart.'.html" height="525" width="100%">
+                src="'.$chart.'-plot.html" height="525" width="100%">
                     </iframe>
                 </div>';
             

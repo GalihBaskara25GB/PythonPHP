@@ -43,28 +43,28 @@ print("Entering new Area...")
 trace0 = pgo.Scatter(x=x_scaled[:,0],
                      y=x_scaled[:,1],
                      text=air.kluster,
-                     name='Member of Cluster',
+                     name='',
                      mode='markers',
                      marker=pgo.scatter.Marker(
-                                       size=26,
+                                       size=16,
                                        opacity=0.8,
-                                       color='Orange',
+                                       color=air.kluster,
                                        line=dict(
                                             color='DarkSlateGray',
                                             width=2)
                                         ),
-                     showlegend=True                     
+                     showlegend=False                     
 )
 
 trace1 = pgo.Scatter(x=centers[:, 0],
                      y=centers[:, 1],
-                     name='Centroids',
+                     name='Centroid',
                      mode='markers',
                      marker=pgo.scatter.Marker(symbol='x',
-                                       size=16,
-                                       color='MediumPurple'
+                                       size=12,
+                                       color='Green'
                                         ),
-                     showlegend=True
+                     showlegend=False
 )
 
 data7 = [trace0, trace1]
@@ -78,13 +78,14 @@ layout7 = pgo.Layout(
                                      showticklabels=True),
                      hovermode='closest')
 
-layout7['title'] = 'Air Quality K-Means Clustering filtered by NMHC and RH'
+layout7['title'] = 'Air Quality - K-Means Clustering filtered by NMHC and RH'
 print("Finished Rendering layout7")
 
 fig = pgo.Figure(data=data7, layout=layout7)
+fig.update_layout(template='plotly_white')
 
 try:
-    pio.write_html(fig, file='kmeans.html', auto_open=False)
+    pio.write_html(fig, file='clustered-plot.html', auto_open=False)
     print(True)
 except:
     print(False) 
