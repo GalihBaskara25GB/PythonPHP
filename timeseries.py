@@ -10,7 +10,7 @@ fig.update_layout(title='Air Quality - Time Series Graph')
 fig.update_layout(template='plotly_white')
 
 try:
-    pio.write_html(fig, file='timeseries-plot.html', auto_open=False)
+    pio.write_html(fig, file='assets/timeseries-plot.html', auto_open=False)
     print(True)
 except:
     print(False)

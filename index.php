@@ -11,7 +11,7 @@
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="../assets/demo.css">
+    <link rel="stylesheet" href="demo/demo.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -94,7 +94,7 @@
                         <ul class="nav navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="#">
-                                    <img src="../assets/man.jpg" width="35px" height="35px" alt="Richard Zelinka" class="img rounded-circle">
+                                    <img src="demo/man.jpg" width="35px" height="35px" alt="Richard Zelinka" class="img rounded-circle">
                                     &emsp;|&emsp;Richard Z
                                 </a>
                             </li>
@@ -103,26 +103,62 @@
 
             </nav>
 
+            <?php
+                $ucl = ''; $cl = ''; $ts = '';
+                if(isset($_GET['chart'])){
+                    $chart = $_GET['chart'];
+                    if($chart=='timeseries') $ts = 'active'; 
+                    else $cl = 'active';                 
+                } else{
+                    $chart = 'unclustered';
+                    $ucl = 'active'; 
+                }
+            ?>
+
             <div class="main-content shadow-lg pt-3 rounded">
                 <ul class="nav nav-tabs pl-2">
                     <li class="nav-item">
-                      <a class="nav-link border-0 active" id="unclustered" href="#">Unclustered Data</a>
+                      <a class="nav-link border-0 <?php echo $ucl ?>" id="unclustered" href="index.php">Unclustered Data</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link border-0" id="clustered" href="#">Clustered Data</a>
+                      <a class="nav-link border-0 <?php echo $cl ?>" id="clustered" href="?chart=clustered">Clustered Data</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link border-0" id="timeseries" href="#">Timeseries</a>
+                      <a class="nav-link border-0 <?php echo $ts ?>" id="timeseries" href="?chart=timeseries">Timeseries</a>
                     </li>
                 </ul>
                 <div class="card border-0 rounded-0">
                     <div class="card-body">
-                      
-                        <div class="embed-responsive embed-responsive-16by9 iframe-wrapper">
-                            <iframe id="igraph" class="embed-responsive-item" scrolling="no" seamless="seamless" 
-                        src="../assets/unclustered-plot.html" height="525" width="100%">
-                            </iframe>
-                        </div>
+
+                <?php
+                    //
+                    // $file is the path to the project, change the value based on your project's path
+                    // e.g : if you placed your xampp folder in C drive, inside WEB folder, then you must change it like this:
+                    //       $file = 'C:/WEB/xampp/htdocs/PythonPHP/'.$chart.'.py';
+                    //
+
+                    $file = 'D:/xampp/htdocs/PythonPHP/'.$chart.'.py';
+                    if(file_exists($file)) {
+                        $command = escapeshellcmd($file);
+                        $output = shell_exec($command);
+
+                        if($output) {
+                            echo '
+                            
+                            <div class="embed-responsive embed-responsive-16by9 iframe-wrapper">
+                                <iframe id="igraph" class="embed-responsive-item" scrolling="no" seamless="seamless" 
+                            src="assets/'.$chart.'-plot.html" height="525" width="100%">
+                                </iframe>
+                            </div>';
+                        
+                        } else echo '<div class="alert alert-warning" role="alert">
+                                    Failed: Unable to generate report :(
+                                    </div>';
+                    
+                    } else echo '<div class="alert alert-warning" role="alert">
+                                Warning: The path is incorrect or file is not exist!
+                                </div>';
+                ?>
 
                     </div>
                   </div>
@@ -139,7 +175,16 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <script src="../assets/demo.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $('#content').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+
 </body>
 
 </html>

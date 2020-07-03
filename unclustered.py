@@ -11,7 +11,7 @@ fig.update_layout(template='plotly_white')
 fig.update_layout(title='Air Quality - Unclustered Data')
 
 try:
-    pio.write_html(fig, file='unclustered-plot.html', auto_open=False)
+    pio.write_html(fig, file='assets/unclustered-plot.html', auto_open=False)
     print(True)
 except:
     print(False) 

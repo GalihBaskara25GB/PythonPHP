@@ -85,7 +85,7 @@ fig = pgo.Figure(data=data7, layout=layout7)
 fig.update_layout(template='plotly_white')
 
 try:
-    pio.write_html(fig, file='clustered-plot.html', auto_open=False)
+    pio.write_html(fig, file='assets/clustered-plot.html', auto_open=False)
     print(True)
 except:
     print(False) 
